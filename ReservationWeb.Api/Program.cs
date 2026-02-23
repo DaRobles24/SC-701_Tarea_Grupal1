@@ -9,9 +9,24 @@ builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IReservationServices, ReservationServices>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// CORS: permite peticiones desde el proyecto MVC
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowMvc", policy =>
+    {
+        policy.WithOrigins(
+                "http://localhost:5000",
+                "https://localhost:5001",
+                "http://localhost:7000",
+                "https://localhost:7001"
+              )
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -23,6 +38,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// CORS debe ir antes de Authorization y Controllers
+app.UseCors("AllowMvc");
 
 app.UseAuthorization();
 

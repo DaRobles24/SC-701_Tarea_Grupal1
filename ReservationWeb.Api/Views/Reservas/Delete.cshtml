@@ -1,0 +1,51 @@
+@model ReservationWeb.Mvc.Models.ReservationListViewModel
+@{
+    ViewData["Title"] = "Eliminar Reserva";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Confirmar Eliminación
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger py-2">
+                        <strong>¿Seguro que deseas eliminar esta reserva?</strong><br/>
+                        <small>Esta acción no se puede deshacer.</small>
+                    </div>
+
+                    <dl class="row">
+                        <dt class="col-sm-5 text-muted">Paciente</dt>
+                        <dd class="col-sm-7 fw-semibold">@Model.Paciente</dd>
+
+                        <dt class="col-sm-5 text-muted">Médico</dt>
+                        <dd class="col-sm-7">@Model.Medico</dd>
+
+                        <dt class="col-sm-5 text-muted">Especialidad</dt>
+                        <dd class="col-sm-7">
+                            <span class="badge bg-primary rounded-pill">@Model.Especialidad</span>
+                        </dd>
+
+                        <dt class="col-sm-5 text-muted">Fecha de Cita</dt>
+                        <dd class="col-sm-7">@Model.Fecha.ToString("dd/MM/yyyy HH:mm")</dd>
+                    </dl>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </a>
+                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash-fill"></i> Sí, eliminar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
